@@ -19,7 +19,7 @@
   - Sense Amplifier
 
   ### 6T cell 
-  ![Schemaitc of 6T cell](<img width="1016" height="735" alt="SRAM_6Tcell" src="https://github.com/user-attachments/assets/4434de27-720f-4202-b5aa-a71ee20ef9bb" />
+  ![Schemaitc of 6T cell](<img width="1016" height="735" alt="SRAM_6Tcell" src="https://github.com/user-attachments/assets/ad72f145-5ff4-49d5-b3ff-82aac1712300" />
 )
   
 
