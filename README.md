@@ -18,9 +18,13 @@
   - Write Driver
   - Sense Amplifier
 
+
   ### 6T cell 
-  ![Schemaitc of 6T cell](<img width="1016" height="735" alt="SRAM_6Tcell" src="https://github.com/user-attachments/assets/ad72f145-5ff4-49d5-b3ff-82aac1712300" />
-)
-  
+  ![Schemaitc of 6T cell](./images/SRAM_6Tcell.png)
+    It is the actual element where the data ie.,bit is stored. It consists of two CMOS inverter which are connected to each other in *Cross Coupled manner*, which behaves like a latch. The two CMOS inverters forms the fours transistors of six and the remaining two are called as *Access Transistors* that are the connecting units of the 6T cell, that decides whether the storage element( latch - two cross coupled inverters) is availabe for read and write or disconnected. The gates of two access transistors are connected together and labelled as *Wordline* which is responsible for connecting and disconnecting the 6T cell from the external circuits(Precharge circuit, Write Driver & Sense amplifier). The Bit line and Bit line bar(The bar is just given for name sake, they are not to be in complement) to the access transistors, based their values the sense amplifier reads the data stored.
+
+  ### Precharge Circuit
+  ![Schematic of Precharge Circuit](./images/SRAM_PreCharge Circuit.png)
+    
 
   
