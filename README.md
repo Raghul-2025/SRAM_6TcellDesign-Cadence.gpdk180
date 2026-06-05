@@ -13,13 +13,14 @@
 ## Overview of SRAM built using 6T cell which stores a Single bit
   SRAM is nothing but the *Static Random Access Memory* and in this, I built it using 6T cell which means that **six transistors** are connected to make the storage element of the circuit. It can also be built using 8T cell and 10T cell.
   It consists of *four separate circuits* that are integrated as a single circuit to make the single bit to read and write. They are,
-  -Precharge Circuit 
-  -6T cell
-  -Write Driver
-  -Sense Amplifier
+  - Precharge Circuit 
+  - 6T cell
+  - Write Driver
+  - Sense Amplifier
 
   ### 6T cell 
-  ![Schemaitc of 6T cell]("C:\Users\RAHUL M\Downloads\SRAM_6Tcell.png")
+  ![Schemaitc of 6T cell](<img width="1016" height="735" alt="SRAM_6Tcell" src="https://github.com/user-attachments/assets/4434de27-720f-4202-b5aa-a71ee20ef9bb" />
+)
   
 
   
