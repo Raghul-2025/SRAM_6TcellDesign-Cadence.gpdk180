@@ -66,12 +66,12 @@ The control input of the Sense Amplifier is Read Enable (RE). Similar to Write E
   
 #### Timing Analysis
   The order of control signals is critical for correct SRAM operation. The complete timing sequence is:
-    - PC = LOW → Precharge ON → BL and BLB charged to VDD
-    - PC = HIGH → Precharge OFF → BL and BLB float at VDD
-    - Write Enable = HIGH + WL = HIGH → Write operation performed
-    - PC = LOW again → Second precharge → BL and BLB reset to VDD
-    - PC = HIGH → Precharge OFF
-    - Read Enable = HIGH + WL = HIGH → Read operation performed → Dout valid
+  - PC = LOW → Precharge ON → BL and BLB charged to VDD
+  - PC = HIGH → Precharge OFF → BL and BLB float at VDD
+  - Write Enable = HIGH + WL = HIGH → Write operation performed
+  - PC = LOW again → Second precharge → BL and BLB reset to VDD
+  - PC = HIGH → Precharge OFF
+  - Read Enable = HIGH + WL = HIGH → Read operation performed → Dout valid
   
 #### Output Waveform
   ![This shows the read and the write operation](./images/SRAM_Waveform_SingleBit.png)
