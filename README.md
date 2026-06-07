@@ -1,5 +1,5 @@
-# SRAM - Single Bit Storage using 6T Cell
-  A complete overview on the design of SRAM( using 6T cell ) and on the working of how it stores a bit. This Repo gives the clear working of Precharge circuit, 6T Cell, Write Driver ,Sense Amplifier and tells how they together works as an integrated circuit.
+# 1-Bit SRAM Design using 6T Cell — Cadence Virtuoso | gpdk180 
+  A complete overview of the design of SRAM (using a 6T cell) and the working of how it stores a single bit. This repository provides a clear explanation of the Precharge Circuit, 6T Cell, Write Driver, and Sense Amplifier, and describes how they work together as an integrated circuit.
 
 ## Content :-
 1. Introduction on 6T SRAM
@@ -7,39 +7,87 @@
 3. Precharge Circuit
 4. Write Driver
 5. Sense Amplifier
-6. Write and Read Operation
-7. Timing Analysis
+6. Write operation
+7. Read operation
+8. Timing Analysis
+9. Simulation Results
 
 ## Overview of SRAM built using 6T cell which stores a Single bit
-  SRAM is nothing but the *Static Random Access Memory* and in this, I built a SRAM which stores a single bit using 6T cell which means **six transistors** are connected to make the storage element of the circuit. It can also be built using 8T cell and 10T cell.
-  It consists of *four separate circuits* that are integrated as a single circuit to make the single bit to read and write. They are,
+  SRAM stands for *Static Random Access Memory*. In this project, I designed a 1-bit SRAM using a 6T cell, which means *six transistors* are connected together to form the core storage element of the circuit. It can also be implemented using an 8T cell or a 10T cell.
+It consists of four separate circuits that are integrated together to enable reading and writing of a single bit. They are:
   - Precharge Circuit 
   - 6T cell
   - Write Driver
   - Sense Amplifier
 
 
-  ### 6T cell 
+### 6T cell 
   ![Schemaitc of 6T cell](./images/SRAM_6Tcell.png)
-    It is the actual element where the data ie.,bit is stored. It consists of two CMOS inverters which are connected to each other in *Cross Coupled manner*, which behaves like a latch. The two CMOS inverters forms the fours transistors of six and the remaining two are called as *Access Transistors* that are the connecting units of the 6T cell, that decides whether the storage element( latch - two cross coupled inverters) is available for read and write or disconnected. The gates of two access transistors are connected together and labelled as *Wordline* which is responsible for connecting and disconnecting the 6T cell from the external circuits(Precharge circuit, Write Driver & Sense amplifier). The Bit line and Bit line bar(The bar is just given for name sake, they are not need to be in complement always) are connected to the access transistors, based on the variations in their values the sense amplifier reads the data stored.
+    The 6T cell is the core storage element where the actual data, i.e., a single bit, is stored. It consists of two CMOS inverters connected to each other in a *cross-coupled manner*, which causes them to behave like a latch. These two CMOS inverters form four of the six transistors, and the remaining two are called *Access Transistors*. The access transistors act as the connection units of the 6T cell, determining whether the storage element (the latch formed by the two cross-coupled inverters) is accessible for read and write operations or completely isolated. The gates of both access transistors are connected together and labeled as the *Word Line (WL)*, which is responsible for connecting and disconnecting the 6T cell from the external circuits (Precharge Circuit, Write Driver, and Sense Amplifier). The Bit Line (BL) and Bit Line Bar (BLB) are connected to the access transistors. It is important to note that BLB is not always the complement of BL — the term "bar" simply refers to the complementary bit line by convention. Based on the voltage variations on BL and BLB, the Sense Amplifier determines the data stored in the cell.
 
-  ### Precharge Circuit
+### Precharge Circuit
   ![Schematic of Precharge Circuit](./images/SRAM_PreChargeCircuit.png)
-    It is the circuit that charges the Bit line and the Bit line bar to VDD(lets say 1.8 V) before every read operation and write operation. It consists of three PMOS transistors - two transistors to connect and disconnect the Bit line and the Bit bar line to vdd and the another transistor called *Equalizer transistor* that confirms the condition that both the bit and bit line bar are equal in voltage before performing any operation, beacuse the any difference in the voltage may disturb the read and write operation. The precharge circuit is made of PMOS not NMOS because PMOS transistors are good at pulling nodes UP toward VDD. They are called pull up transistors. And, here PC is the control input of the precharge circuit, when it's high(ie., logic 1 or 1.8V), all the PMOS stays off, so the bit line and the bit bar line gets disconnected from the precharge circuit and when the is low(ie., logic 0 or 0V) all the PMOS gets on, So the bit line and the bit line bar connected to the precharge circuit and gets charged to VDD. Here, *Bit line and the Bit bar line has the Parasitic Capacitance*, which makes them to stay with VDD even after the precharge circuit is disconnected, which is the key speciality for read and write operation. 
+    The Precharge Circuit is responsible for charging the Bit Line (BL) and Bit Line Bar (BLB) to VDD (1.8V in this design) before every read and write operation. It consists of three PMOS transistors — two transistors to connect and disconnect BL and BLB to VDD, and a third transistor called the *Equalizer Transistor*, which ensures that both BL and BLB are at exactly equal voltage before any operation begins. This is important because even a small voltage difference between BL and BLB before the operation can disturb the read or write result.
+The Precharge Circuit uses PMOS transistors instead of NMOS because PMOS transistors are good at pulling nodes up toward VDD — they are called pull-up transistors. If NMOS were used instead, BL and BLB could never be charged to the full VDD due to the threshold voltage drop of NMOS.
+The control input of the Precharge Circuit is PC (Precharge Control). Since PMOS is active low:
+- PC = 1 (1.8V) → all three PMOS transistors turn OFF → BL and BLB are disconnected from the precharge circuit → read or write operation can proceed freely
+- PC = 0 (0V) → all three PMOS transistors turn ON → BL and BLB are connected to VDD and charged to 1.8V
+  An important characteristic of *BL and BLB is that they possess Parasitic Capacitance* — a natural property of every wire in a circuit. This capacitance holds the charge on BL and BLB even after the precharge circuit disconnects, allowing them to remain at VDD long enough for the read or write operation to complete successfully. This is a key property that makes the SRAM operation reliable.
 
-  ### Write Driver
+### Write Driver
   ![Schematic of Write Driver](./images/SRAM_WriteDriver.png)
-    It is the circuit that writes the data into the 6T cell by means of bit line and bit line bar. It has a control input called Write Enable that connects and disconnects the bit line and the bit bar line from the Write Driver. When write enable is high write operation is performed with the input data given as Datain, and when the write enable is low the write driver is disconnected from the bit line and the bit bar line. 
+    The Write Driver is the circuit responsible for writing data into the 6T cell through the Bit Line (BL) and Bit Line Bar (BLB). It has a control input called Write Enable (WE), which connects and disconnects the Write Driver from BL and BLB.
+- Write Enable = 1 (1.8V) → Write Driver is connected to BL and BLB → data provided at the Din (Data Input) pin is written into the 6T cell
+- Write Enable = 0 (0V) → Write Driver is disconnected from BL and BLB → no write operation is performed
+  Internally, the Write Driver contains an inverter that generates the complement of Din. This ensures that BL and BLB are always driven to opposite values simultaneously:
+- Din = 1 (1.8V) → BL = 1.8V, BLB = 0V → cell stores 1
+- Din = 0 (0V) → BL = 0V, BLB = 1.8V → cell stores 0 
 
-  ### Sense Amplifier
+### Sense Amplifier
   ![Schematic of Sense Amplifier](./images/SRAM_SenseAmplifier.png)
-    Sense Amplifier is one kind of amplifier circuit, that amplifies the small difference between the values of the bit line and the bit line bar to read the desired output. Here needs the clear understanding of working of transistor to know how the small difference amplifies here and read as a required output which is stored in the 6T cell. In the 6T cell, based on the data stored(either 0 or 1) there is a minor differences in the voltages of bit line and bit line bar. Here, Read enable is the control input like the Write enable which decides whether the bit lin and the bit line bar need to be connected or disconnected.
+   The Sense Amplifier is a circuit that detects and amplifies the small voltage difference between the Bit Line (BL) and Bit Line Bar (BLB) in order to determine the data stored in the 6T cell and produce a clean digital output.
+During a read operation, the Word Line (WL) is activated, connecting the 6T cell to BL and BLB. Based on the data stored in the cell, one of the bit lines drops slightly in voltage while the other remains near VDD. For example:
+- Cell stores 1 → BLB drops slightly → BL > BLB → Sense Amplifier outputs 1
+- Cell stores 0 → BL drops slightly → BLB > BL → Sense Amplifier outputs 0
+  This voltage difference is very small — typically around 100mV — and cannot be used directly as a logic output. The Sense Amplifier detects this tiny difference and snaps it to a clean logic level of either 0V or 1.8V, which is the final read output called Dout.
+The control input of the Sense Amplifier is Read Enable (RE). Similar to Write Enable in the Write Driver:
+- Read Enable = 1 (1.8V) → Sense Amplifier is activated → detects difference between BL and BLB → Dout is valid
+- Read Enable = 0 (0V) → Sense Amplifier is inactive → Dout is invalid
 
-  ### SRAM design to store a single bit
+### SRAM design to store a single bit
+  The complete integrated schematic of the 1-bit SRAM consisting of all four blocks — Precharge Circuit, 6T Cell, Write Driver, and Sense Amplifier — is shown below.
   ![Schematic of the SRAM Design](./images/SRAM_SingleBitStorage.png)
+
+#### Write Operation
+  To write a bit into the SRAM cell, the Precharge Circuit first charges BL and BLB to VDD. Once precharge is complete, the Write Driver is activated by pulling Write Enable HIGH, which forces BL and BLB to opposite values based on Din. The Word Line is then pulled HIGH, connecting the 6T cell to BL and BLB, and the data is written into the cell. Once the write is complete, WL is pulled LOW, isolating the cell and holding the data safely.
   
-  #### Output Waveform
-  ![This shows the read and the write operation](./images/SRAM_Waveform_SingleBit.png)  
+#### Read Operation
+  To read the stored bit, the Precharge Circuit charges BL and BLB to VDD again. Once precharge is complete, the Word Line is pulled HIGH, connecting the cell to BL and BLB. Based on the stored data, one of the bit lines drops slightly in voltage. The Sense Amplifier is then activated by pulling Read Enable HIGH, which detects this small voltage difference and produces a clean digital output at Dout.
+  
+#### Timing Analysis
+  The order of control signals is critical for correct SRAM operation. The complete timing sequence is:
+    - PC = LOW → Precharge ON → BL and BLB charged to VDD
+    - PC = HIGH → Precharge OFF → BL and BLB float at VDD
+    - Write Enable = HIGH + WL = HIGH → Write operation performed
+    - PC = LOW again → Second precharge → BL and BLB reset to VDD
+    - PC = HIGH → Precharge OFF
+    - Read Enable = HIGH + WL = HIGH → Read operation performed → Dout valid
+  
+#### Output Waveform
+  ![This shows the read and the write operation](./images/SRAM_Waveform_SingleBit.png)
+  
+#### Simulation Results
+  The transient simulation was performed in Cadence Virtuoso ADE using the gpdk180 process library at 1.8V supply. The waveform above shows the complete write followed by read operation, confirming correct functionality of the 1-bit SRAM.
+
+
+### References 
+  1.For concepts
+  - Weste, N. H. E., & Harris, D. — CMOS VLSI Design: A Circuits and Systems Perspective
+  - Youtube playlist - *in 5 minutes*
+    [Watch here](https://youtube.com/playlist?list=PLRvusBxa2-SuGnxi-qAVO6rTNwBZdAF0w&si=4XhlFVw93QXXhBbS)
+    
+  2.For Schematics and design 
+  - Github repositories - Implementation of SRAM using 6T cell
     
     
 
