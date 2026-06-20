@@ -1,4 +1,4 @@
-# 1-Bit SRAM Design using 6T Cell — Cadence Virtuoso | gpdk180 
+# 16-Bit SRAM Design using 6T Cell — Cadence Virtuoso | gpdk180 
   A complete overview of the design of SRAM (using a 6T cell) and the working of how it stores a single bit. This repository provides a clear explanation of the Precharge Circuit, 6T Cell, Write Driver, and Sense Amplifier, and describes how they work together as an integrated circuit.
 
 ## Content :-
@@ -78,6 +78,19 @@ The control input of the Sense Amplifier is Read Enable (RE). Similar to Write E
   
 #### Simulation Results
   The transient simulation was performed in Cadence Virtuoso ADE using the gpdk180 process library at 1.8V supply. The waveform above shows the complete write followed by read operation, confirming correct functionality of the 1-bit SRAM.
+
+## 16-bit SRAM Design
+  Extension of the 1-bit SRAM to a complete 16-bit SRAM array.
+Includes full schematic and layout designed in Cadence Virtuoso
+using gpdk180 at 1.8V.
+#### Schematic of 16-bit SRAM
+  ![Schematic of the SRAM Design](./16bit_SRAM/SRAM_16bit_Schematic.png)
+
+#### Simulation and Results
+  ![Schematic of the SRAM Design](./16bit_SRAM/SRAM_16bit_Waveform.png)
+
+#### Layout design 
+  ![Schematic of the SRAM Design](./16bit_SRAM/SRAM_16bit_layout.png)
 
 
 ### References 
